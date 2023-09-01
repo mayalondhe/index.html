@@ -1,0 +1,32 @@
+// Make a GET request to the randomuser.me API
+fetch('https://randomuser.me/api/')
+  .then(response => {
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();  // Parse the response as JSON
+  })
+  .then(data => {
+    // Extract user details
+    const user = data.results[0];
+    const profilePicture = user.picture.large;
+    const username = user.login.username;
+    const fullName = `${user.name.title} ${user.name.first} ${user.name.last}`;
+    const gender = user.gender;
+    const dateOfBirth = user.dob.date;
+    const address = `${user.location.street.number} ${user.location.street.name}, ${user.location.city}, ${user.location.state}, ${user.location.postcode}, ${user.location.country}`;
+    const emailAddress = user.email;
+
+    // Display or use the extracted details
+    console.log(`Profile Picture: ${profilePicture}`);
+    console.log(`Username: ${username}`);
+    console.log(`Full Name: ${fullName}`);
+    console.log(`Gender: ${gender}`);
+    console.log(`Date of Birth: ${dateOfBirth}`);
+    console.log(`Address: ${address}`);
+    console.log(`Email Address: ${emailAddress}`);
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error.message);
+  });
